@@ -1,0 +1,23 @@
+{{ template "chrome/header.html" }}
+{{ template "chrome/sidebar.html" . }}
+
+<div class="content container">
+  <div class="page">
+    <div class="pagehead">
+      <h1 id="title">{{ .Title }}
+	{{ template "chrome/searchbox.html" }}
+      </h1>
+      <p>{{ .Description }}</p>
+    </div>
+    <hr class="pageheadline">
+    <div>
+      {{ template "chrome/pkg_alpha.html" }}
+    </div>
+    <h2>Recently updated</h2>
+    <p>Under construction</p>
+    <h2>Most depended upon</h2>
+    <p>Under construction</p>
+  </div>
+</div>
+
+{{ template "chrome/footer.html" }}

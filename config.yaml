@@ -1,0 +1,10 @@
+---
+contentdir: "_content"
+layoutdir: "_layouts"
+publishdir: "_site/w"
+builddrafts: false
+baseurl: "http://cran.github.io/w/"
+canonifyurls: true
+indexes:
+  category: "categories"
+---

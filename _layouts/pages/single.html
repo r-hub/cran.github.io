@@ -1,0 +1,17 @@
+{{ template "chrome/header.html" }}
+{{ template "chrome/sidebar.html" . }}
+
+<div class="content container">
+  <div class="page">
+    <div class="pagehead">
+      <h1 id="title">{{ .Title }}</h1>
+      <p>{{ .Description }}</p>
+    </div>
+    <hr class="pageheadline">
+    <div>
+      {{ .Content }}
+    </div>
+  </div>
+</div>
+
+{{ template "chrome/footer.html" }}

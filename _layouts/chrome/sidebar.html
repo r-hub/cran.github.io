@@ -1,0 +1,45 @@
+<div class="sidebar">
+  <div class="container">
+    <div class="sidebar-about">
+      <h1><a href="/">CRAN @ github</a></h1>
+      <p class="lead">Unofficial read-only mirror of CRAN R packages</p>
+    </div>
+
+    <hr>
+
+    {{ $mylink := .Permalink }}
+    {{ $mylink1 := ("/categories/r" | printf "%s%s" .Site.BaseUrl) }}
+    {{ $mylink2 := ("/pages/about" | printf "%s%s" .Site.BaseUrl) }}
+
+    <ul class="sidebar-nav">
+      {{ range first 5 .Site.Indexes.categories.r }}
+        <li class="sidebar-nav-item 
+		   {{ if eq $mylink .Page.Permalink }} active {{ end }}">
+	  <a href="{{ .Page.Permalink }}">{{ .Page.Title }}</a>
+	</li>
+      {{ end }}
+      <li class="sidebar-nav-item
+		 {{ if eq $mylink $mylink1 }} active {{ end }}">
+	<a href="/categories/r">Older versions</a>
+      </li>
+    </ul>
+    
+    <hr>
+
+    <ul class="sidebar-nav">
+      <li class="sidebar-nav-item 
+		 {{ if eq $mylink $mylink2 }} active {{ end }} ">
+	<a href="/pages/about">
+	  About / Contact / Contribute</a>
+      </li>
+      <!-- <li class="sidebar-nav-item"><a href="/pages/blog">Blog</a></li> -->
+     </ul>
+
+    <footer>
+      <div>
+	<p>
+	</p>
+      </div>
+    </footer>
+  </div>
+</div>
