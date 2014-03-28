@@ -8,8 +8,8 @@
     <hr>
 
     {{ $mylink := .Permalink }}
-    {{ $mylink1 := ("/categories/r" | printf "%s%s" .Site.BaseUrl) }}
-    {{ $mylink2 := ("/pages/about" | printf "%s%s" .Site.BaseUrl) }}
+    {{ $mylink1 := ("categories/r" | printf "%s%s" .Site.BaseUrl) }}
+    {{ $mylink2 := ("pages/about" | printf "%s%s" .Site.BaseUrl) }}
 
     <ul class="sidebar-nav">
       {{ range first 5 .Site.Indexes.categories.r }}
