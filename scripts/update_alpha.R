@@ -2,7 +2,7 @@
 ## Update the alphabetical pages for a given R version
 ## R version must be given as a parameter.
 
-HEADER <- "---\nTitle: R-%(version)\nDescription: CRAN packages for R %(version)\n---\n\n# %(initial)\n\n"
+HEADER <- "---\nTitle: R-%(version)\nDescription: CRAN packages for R %(version)\ntype: ralpha\n---\n\n# %(initial)\n\n"
 
 source("common.R")
 
