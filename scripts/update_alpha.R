@@ -35,14 +35,19 @@ for (let in alpha) {
   head <- gsub("%(version)", version, HEADER, fixed=TRUE)
   head <- gsub("%(initial)", toupper(let), head, fixed=TRUE)
 
+  if (version == "devel") {
+    ghlink <- paste0(github_url, "/", names(mypkgs))
+  } else {
+    ghlink <- paste0(github_url, "/", names(mypkgs), "/tree/R-", version,
+                     " \"view version on github\"")
+  }
+  
   ofile <- paste0(odir, "/", let, ".md")
   cat(head, file=ofile)
   cat(file=ofile, sep="\n\n", append=TRUE,
       paste0("[**", names(mypkgs), "**](",
              github_url, "/", names(mypkgs), " \"view on github\")",
-             " — ", "[", myvers, "](", github_url, "/",
-             names(mypkgs), "/tree/R-", version,
-             " \"view version on github\") ",
+             " — ", "[", myvers, "](", ghlink, ") ",
              "<br/>", "<span class=\"alphatitle\"> ", mytitles, " </span>")
       )
 
