@@ -21,3 +21,8 @@ get_pkgs_for_devel <- function() {
   vv <- content(GET(paste0(url, "/-/desc/")), as="text")
   js <- fromJSON(vv, simplifyDataFrame=FALSE)
 }
+
+get_topdeps <- function() {
+  vv <- content(GET(paste0(url, "/-/topdeps")), as="text")
+  js <- unlist(fromJSON(vv, simplifyDataFrame=FALSE))
+}
