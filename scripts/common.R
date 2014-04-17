@@ -13,7 +13,11 @@ get_versions <- function() {
 }
 
 get_pkgs_for_version <- function(version) {
-  vv <- content(GET(paste0(url, "/-/release/", version)), as="text")
-  js <- fromJSON(vv)
-  unlist(js)
+  vv <- content(GET(paste0(url, "/-/releasedesc/", version)), as="text")
+  js <- fromJSON(vv, simplifyDataFrame=FALSE)
+}
+
+get_pkgs_for_devel <- function() {
+  vv <- content(GET(paste0(url, "/-/desc/")), as="text")
+  js <- fromJSON(vv, simplifyDataFrame=FALSE)
 }

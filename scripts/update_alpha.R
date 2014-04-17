@@ -9,13 +9,18 @@ source("common.R")
 versions <- get_versions()
 
 args <- commandArgs(trailingOnly=TRUE)
-if (length(args) != 1 || ! (args[1] %in% versions)) {
+if (length(args) != 1 ||
+    (! (args[1] %in% versions) && args[1] != "devel")) {
   stop("Version not given or invalid version")
 }
 
 version <- args[1]
 
-pkgs <- get_pkgs_for_version(version)
+if (version == "devel") {
+  pkgs <- get_pkgs_for_devel()
+} else {
+  pkgs <- get_pkgs_for_version(version)
+}
 initial <- substr(tolower(names(pkgs)), 1, 1)
 alpha <- unique(initial)
 
@@ -24,6 +29,8 @@ dir.create(odir)
 
 for (let in alpha) {
   mypkgs <- pkgs[initial == let]
+  myvers <- sapply(mypkgs, "[[", "version")
+  mytitles <- sapply(mypkgs, "[[", "title")
 
   head <- gsub("%(version)", version, HEADER, fixed=TRUE)
   head <- gsub("%(initial)", toupper(let), head, fixed=TRUE)
@@ -33,9 +40,10 @@ for (let in alpha) {
   cat(file=ofile, sep="\n\n", append=TRUE,
       paste0("[**", names(mypkgs), "**](",
              github_url, "/", names(mypkgs), " \"view on github\")",
-             " — ", "[", mypkgs, "](", github_url, "/",
+             " — ", "[", myvers, "](", github_url, "/",
              names(mypkgs), "/tree/R-", version,
-             " \"view version on github\")")
+             " \"view version on github\") ",
+             "<br/>", "<span class=\"alphatitle\"> ", mytitles, " </span>")
       )
 
 }
