@@ -70,6 +70,3 @@ Want to contribute? You can!
 - Have an idea to improve these services? Please open an issue in our
   [issue tracker](https://github.com/metacran/tools/issues) about it,
   and we'll discuss it.
-- You want to contribute to our server rental bills? Or you can offer
-  reliable (!) server space and/or services? Please contact me at
-  <csardi.gabor@gmail.com>.
