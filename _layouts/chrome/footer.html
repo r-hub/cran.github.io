@@ -1,20 +1,7 @@
 
+{{ if .Params.vaguetime }}
 <script type="text/javascript" src="/js/vagueTime.js"></script>
 <script type="text/javascript" src="/js/vagueTimeUpdater.js"></script>
-<script type="text/javascript">
+{{ end }}
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', '']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script');
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 
-        'http://www') + '.google-analytics.com/ga.js';
-    ga.setAttribute('async', 'true');
-    document.documentElement.firstChild.appendChild(ga);
-  })();
-
-</script>
-</body>
-</html>
+{{ template "chrome/node_footer.html" }}
