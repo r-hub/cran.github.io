@@ -19,18 +19,28 @@ datestamp <- paste0('<span data-since="', long_dd, '" class="vagueTime">',
 name <- sapply(recent, "[[", "name")
 
 version <- "devel"
-myfile <- paste0("../_content/r/r", gsub("\\.", "", version), ".md")
+outfile <- paste0("../_content/r/r", gsub("\\.", "", version), ".md")
+
+if (file.exists(outfile)) {
+  infile <- outfile
+} else {
+  infile <- paste0("../_input/r/r", gsub("\\.", "", version), ".md")
+}
 
 recent_str <- paste0("  - ", datestamp, " ", "[", name, "]",
                   "(", github_url, "/", name, ")",
                   collapse="\n")
 
-lines <- readLines(myfile)
+if (!file.exists("../_content/r")) {
+  dir.create("../_content/r")
+}
+
+lines <- readLines(infile)
 start <- which(lines == placeholder[1])
 end <- which(lines == placeholder[2])
 if (length(start) != 1 || length(end) != 1) {
-  stop("Invalid placeholder(s) in", myfile)
+  stop("Invalid placeholder(s) in", infile)
 }
-cat(lines[1:start], sep="\n", file=myfile)
-cat(recent_str, file=myfile, "\n\n", append=TRUE)
-cat(lines[end:length(lines)], sep="\n", file=myfile, append=TRUE)
+cat(lines[1:start], sep="\n", file=outfile)
+cat(recent_str, file=outfile, "\n\n", append=TRUE)
+cat(lines[end:length(lines)], sep="\n", file=outfile, append=TRUE)

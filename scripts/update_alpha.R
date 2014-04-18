@@ -25,7 +25,7 @@ initial <- substr(tolower(names(pkgs)), 1, 1)
 alpha <- unique(initial)
 
 odir <- paste0("../_content/r/r", gsub("\\.", "", version))
-dir.create(odir)
+dir.create(odir, recursive=TRUE)
 
 for (let in alpha) {
   mypkgs <- pkgs[initial == let]
