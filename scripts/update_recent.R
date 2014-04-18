@@ -8,7 +8,8 @@ placeholder <- c("<!-- recent-begin -->",
                  "<!-- recent-end -->")
 
 recent <- get_recent(10)
-dd <- ymd_hms(sapply(recent, function(x) x$package$`Date/Publication`))
+raw_dd <- sapply(recent, function(x) x$package$`Date/Publication`)
+dd <- with_tz(ymd_hms(raw_dd, tz="CET"), "UTC")
 long_dd <- format(dd, format="%Y-%m-%d %H:%M:%S %Z")
 short_dd <- format(dd, format="%m/%d %H:%M")
 
