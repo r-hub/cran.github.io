@@ -112,44 +112,10 @@ client.search({
 	"query": {
 	    "function_score": {
 		"query": { "multi_match": {
-		    fields: ["Package", "Title", "Description", "Author",
-			     "Maintainer", "_all" ],
+		    fields: ["Package^10", "Title^5", "Description^2",
+			     "Author^3", "Maintainer^4", "_all" ],
 		    query: query.q } },
 		"functions": [
-		    {
-			"filter": { "term": { "Package": query.q } },
-			"boost_factor": 10
-		    },
-		    {
-			"filter": {
-			    "query": { "match": { "Title": {
-				"query": query.q,
-				"analyzer": "english"
-			    } } }
-			},
-			"boost_factor": 5
-		    },
-		    {
-			"filter": {
-			    "query": { "match": { "Maintainer": query.q } }
-			},
-			"boost_factor": 4
-		    },
-		    {
-			"filter": {
-			    "query": { "match": { "Author": query.q } }
-			},
-			"boost_factor": 3
-		    },
-		    {
-			"filter": {
-			    "query": { "match": { "Description": {
-				"query": query.q,
-				"analyzer": "english"
-			    } } }
-			},
-			"boost_factor": 2
-		    },
 		    {
 			"script_score": {
 			    "script": "_score * doc['revdeps'].value"
