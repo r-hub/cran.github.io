@@ -10,4 +10,55 @@
 .alphatitle {
     color: #222;
     font-size: 90%;
+    line-height: 100%;
+}
+
+p.alphatitle {
+    margin-bottom: 5px;
+}
+
+.description {
+    color: #555;
+    font-size: 80%;
+    line-height: 100%;
+    margin-bottom: 5px;
+}
+
+.package {
+    margin-bottom: 40px;
+}
+
+.packagetitle {
+    font-size: 140%;
+    color: "#00f";
+    float: left;
+}
+
+.packageauthor {
+    font-style: italic;
+    font-size: 90%;
+    padding-left: 10px;
+    padding-top: 10px;
+    float: right;    
+}
+
+.packagedesc {
+    clear: both;
+}
+
+.packageurl {
+    font-size: 75%;
+}
+
+.pagination {
+    text-align: center;
+    font-size: 140%;
+}
+
+.pagination span {
+    padding-left: 20px;
+}
+
+.current_page {
+    font-size: 120%;
 }
