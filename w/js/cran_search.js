@@ -111,31 +111,29 @@ client.search({
     "body": {
 	"query": {
 	    "function_score": {
-		"query": {
-		    "bool": {
-			"should": { "match": { "Package": query.q } },
-			"should": { "match": { "Title": query.q } },
-			"should": { "match": { "Description": query.q } },
-			"should": { "match": { "Maintainer": query.q } },
-			"should": { "match": { "Author": query.q } },
-			"should": { "match": { "_all": query.q } }
-		    }
-		},
-		"functions": [{
+		"query": { "multi_match": {
+		    fields: ["Package", "Title", "Description", "Author",
+			     "Maintainer", "_all" ],
+		    query: query.q } },
+		"functions": [
+		    {
 			"filter": { "term": { "Package": query.q } },
-			"boost_factor": 100
+			"boost_factor": 10
 		    },
 		    {
 			"filter": {
-			    "query": { "match_phrase": { "Title": query.q } }
+			    "query": { "match": { "Title": {
+				"query": query.q,
+				"analyzer": "english"
+			    } } }
 			},
-			"boost_factor": 10
+			"boost_factor": 5
 		    },
 		    {
 			"filter": {
 			    "query": { "match": { "Maintainer": query.q } }
 			},
-			"boost_factor": 5
+			"boost_factor": 4
 		    },
 		    {
 			"filter": {
@@ -145,9 +143,17 @@ client.search({
 		    },
 		    {
 			"filter": {
-			    "query": { "match": { "Description": query.q } }
+			    "query": { "match": { "Description": {
+				"query": query.q,
+				"analyzer": "english"
+			    } } }
 			},
 			"boost_factor": 2
+		    },
+		    {
+			"script_score": {
+			    "script": "_score * doc['revdeps'].value"
+			}
 		    }
 		]
 	    }
