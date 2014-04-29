@@ -80,7 +80,6 @@ function add_results(hits, no_hits) {
 	    var paglink='<a href="?q=' + encodeURIComponent(query.q) +
 		'&page=' + i + '">' + i + "</a>"
 	    if (i == mypage) {
-		console.log("foo")
 		paglink = '<strong>' + paglink + '</strong>' 
 		pag_text += '<span class="current_page">' +
 		    paglink + '</span>'
@@ -105,7 +104,8 @@ var client = new elasticsearch.Client({
 // Do the search
 
 client.search({
-    index: 'cran-devel',
+    index: myindex,
+    type: 'package',
     from: (mypage - 1) * 10,
     size: 10,
     q: query.q
