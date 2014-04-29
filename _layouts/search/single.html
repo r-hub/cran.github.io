@@ -1,0 +1,28 @@
+{{ template "chrome/header.html" }}
+{{ template "chrome/sidebar.html" . }}
+
+<div class="content container">
+  <div class="page">
+    <div class="pagehead">
+      <h1 id="title">{{ .Title }}</h1>
+      <p>{{ .Description }}</p>
+      <div class="bigsearch">
+	<form name="cse" id="cran_search" action="">
+	  <input name="q" type="text" size="60" id="cran_input" />
+	  <input type="submit" name="sa" value="Search" />
+	</form>
+      </div>
+    </div>
+    <hr class="pageheadline">
+    {{ .Content }}
+    <div id="search_no_results"></div>
+    <div id="search_results"></div>
+    <div id="search_pagination" class="pagination"></div>
+  </div>
+</div>
+
+<script src="/js/moment.min.js"></script>
+<script src="/js/elasticsearch.min.js"></script>
+<script src="/js/cran_search.js"></script>
+
+{{ template "chrome/footer.html" . }}
