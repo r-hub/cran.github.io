@@ -80,7 +80,6 @@ function add_results(hits, no_hits) {
 	    var paglink='<a href="?q=' + encodeURIComponent(query.q) +
 		'&page=' + i + '">' + i + "</a>"
 	    if (i == mypage) {
-		console.log("foo")
 		paglink = '<strong>' + paglink + '</strong>' 
 		pag_text += '<span class="current_page">' +
 		    paglink + '</span>'
@@ -105,10 +104,55 @@ var client = new elasticsearch.Client({
 // Do the search
 
 client.search({
-    index: 'cran-devel',
+    index: myindex,
+    type: 'package',
     from: (mypage - 1) * 10,
     size: 10,
-    q: query.q
+    "body": {
+	"query": {
+	    "function_score": {
+		"query": {
+		    "bool": {
+			"should": { "match": { "Package": query.q } },
+			"should": { "match": { "Title": query.q } },
+			"should": { "match": { "Description": query.q } },
+			"should": { "match": { "Maintainer": query.q } },
+			"should": { "match": { "Author": query.q } },
+			"should": { "match": { "_all": query.q } }
+		    }
+		},
+		"functions": [{
+			"filter": { "term": { "Package": query.q } },
+			"boost_factor": 100
+		    },
+		    {
+			"filter": {
+			    "query": { "match_phrase": { "Title": query.q } }
+			},
+			"boost_factor": 10
+		    },
+		    {
+			"filter": {
+			    "query": { "match": { "Maintainer": query.q } }
+			},
+			"boost_factor": 5
+		    },
+		    {
+			"filter": {
+			    "query": { "match": { "Author": query.q } }
+			},
+			"boost_factor": 3
+		    },
+		    {
+			"filter": {
+			    "query": { "match": { "Description": query.q } }
+			},
+			"boost_factor": 2
+		    }
+		]
+	    }
+	}
+    }
 }).then(function (resp) {
     var hits = resp.hits.hits;
     var no_hist = resp.hits.total;
