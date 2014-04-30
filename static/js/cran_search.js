@@ -30,10 +30,14 @@ function format_package(pkg) {
     var author=pkg.Maintainer.replace(/ ?<.*>/, '')
     var url=pkg.URL ? ('<div class="packageurl">' + linkify(pkg.URL) +
 		       '</div>') : ''
+    var ver=myindex.replace("cran-", "")
+    var vlink='<a href="https://github.com/cran/' +
+	pkg.Package + (ver==="devel" ? '' : '/tree/R-' + ver) +
+	'">' + pkg.Version + '</a>'
     var html='<div class="package">' +
 	'<div class="packagetitle">' + 
 	'<a href="https://github.com/cran/' + pkg.Package + '">' + 
-	pkg.Package + ' &mdash; ' + pkg.Version + '</a>' + '</div>' + 
+	pkg.Package + '</a>' + ' &mdash; ' + vlink + '</div>' +
 	'<div class="packageauthor"> by ' + author +
 	', ' + time + '</div>' + '<div class="packagedesc">' + 
 	'<p class="alphatitle">' + pkg.Title + '</p>' +
