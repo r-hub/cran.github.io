@@ -30,10 +30,14 @@ function format_package(pkg) {
     var author=pkg.Maintainer.replace(/ ?<.*>/, '')
     var url=pkg.URL ? ('<div class="packageurl">' + linkify(pkg.URL) +
 		       '</div>') : ''
+    var ver=myindex.replace("cran-", "")
+    var vlink='<a href="https://github.com/cran/' +
+	pkg.Package + (ver==="devel" ? '' : '/tree/R-' + ver) +
+	'">' + pkg.Version + '</a>'
     var html='<div class="package">' +
 	'<div class="packagetitle">' + 
 	'<a href="https://github.com/cran/' + pkg.Package + '">' + 
-	pkg.Package + ' &mdash; ' + pkg.Version + '</a>' + '</div>' + 
+	pkg.Package + '</a>' + ' &mdash; ' + vlink + '</div>' +
 	'<div class="packageauthor"> by ' + author +
 	', ' + time + '</div>' + '<div class="packagedesc">' + 
 	'<p class="alphatitle">' + pkg.Title + '</p>' +
@@ -48,24 +52,27 @@ function add_results_html(pkg, div) {
     div.innerHTML += html;
 }
 
-function add_results(hits, no_hits) {
+function add_results(hits, no_hits, took) {
     var ndiv=document.getElementById("search_no_results")    
     var div=document.getElementById("search_results")
     var pag=document.getElementById("search_pagination")
     var pag_text=""
     var nop=Math.min(Math.ceil(no_hits / 10), 10)
+    var ftext=""
 
     if (no_hits == 0) {
-	ndiv.innerHTML += "<p>Your search &ndash; <strong>" + query.q + 
+	ftext = "Your search &ndash; <strong>" + query.q +
 	    "</strong> &ndash; did not match any packages"
     } else if (no_hits == 1) {
-	ndiv.innerHTML += "<p>Found " + no_hits + " package</p>"
+	ftext = "Found " + no_hits + " package in " +
+	    (took/1000).toFixed(2) + " seconds"
     } else if (mypage == 1) {
-	ndiv.innerHTML += "<p>Found " + no_hits + " packages</p>"
+	ftext = "Found " + no_hits + " packages in " +
+	    (took/1000).toFixed(2) + " seconds"
     } else {
-	ndiv.innerHTML += "<p>Page " + mypage + " of " + no_hits + 
-	    " packages</p>"
+	ftext = "Page " + mypage + " of " + no_hits + " packages"
     }
+    ndiv.innerHTML += "<p>" + ftext + "</p>"
 
     for (var i in hits) {
 	add_results_html(hits[i]._source, div)
@@ -128,7 +135,8 @@ client.search({
 }).then(function (resp) {
     var hits = resp.hits.hits;
     var no_hist = resp.hits.total;
-    add_results(hits, no_hist);
+    var took = resp.took;
+    add_results(hits, no_hist, took);
 }, function (err) {
     console.trace(err.message);
 });
