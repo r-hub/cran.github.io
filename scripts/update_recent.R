@@ -10,7 +10,7 @@ placeholder <- c("<!-- recent-begin -->",
 recent <- get_recent(10)
 raw_dd <- sapply(recent, function(x) x$package$`Date/Publication`)
 dd <- with_tz(ymd_hms(raw_dd, tz="CET"), "UTC")
-long_dd <- format(dd, format="%Y-%m-%d %H:%M:%S %Z")
+long_dd <- format(dd, "%a %b %d %Y %H:%M:%S %Z")
 short_dd <- format(dd, format="%m/%d %H:%M")
 
 datestamp <- paste0('<span data-since="', long_dd, '" class="vagueTime">',
