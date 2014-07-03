@@ -105,7 +105,7 @@ function add_results(hits, no_hits, took) {
 // ElasticSearch client
 
 var client = new elasticsearch.Client({
-    host: 'rpkg.igraph.org:9200',
+    host: 'r-pkg.org:9200',
 });
 
 // Do the search
