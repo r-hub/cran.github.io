@@ -105,7 +105,7 @@ function add_results(hits, no_hits, took) {
 // ElasticSearch client
 
 var client = new elasticsearch.Client({
-    host: 'search.r-pkg.org:9200',
+    host: 'seer.r-pkg.org:9200',
 });
 
 // Do the search
@@ -125,7 +125,7 @@ client.search({
 		"functions": [
 		    {
 			"script_score": {
-			    "script": "_score * doc['revdeps'].value"
+			    "script": "cran_search_score"
 			}
 		    }
 		]
