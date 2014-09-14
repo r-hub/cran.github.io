@@ -111,7 +111,8 @@ var client = new elasticsearch.Client({
 // Do the search
 
 client.search({
-    index: myindex,
+    //    index: myindex,
+    index: 'cran-devel',
     type: 'package',
     from: (mypage - 1) * 10,
     size: 10,
