@@ -3,7 +3,7 @@
 library(jsonlite)
 library(httr)
 
-url <- "http://db.r-pkg.org"
+url <- "http://crandb.r-pkg.org"
 github_url <- "https://github.com/cran"
 
 get_versions <- function() {
